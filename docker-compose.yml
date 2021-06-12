@@ -10,21 +10,24 @@ services:
      - PGID=1000
      - MONGO_INITDB_ROOT_USERNAME=mdbadmin
      - MONGO_INITDB_ROOT_PASSWORD=hQ97T9JJKZoqnFn2NXE
-     volumes:
-       - mongo_data:/data/db
      ports:
      - 27017:27017
      - 28017:28017
      restart: unless-stopped
+     volumes:
+       - mongo_data:/data/db
 
    vault:
      image: vault
      container_name: vault
      command: vault server -dev -dev-root-token-id=root && vault login root
-     ports:
-     - 8200:8200
      links:
      - mongodb
+     ports:
+     - 8200:8200
+     volumes:
+       - mongo_data:/data/db
 
 volumes:
   mongo_data:
+  vault_data:
